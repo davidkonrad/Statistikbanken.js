@@ -17,11 +17,12 @@ const Demo = (function(window, document, Statistikbanken) {
 	})
 
 	let data_format = 'JSON'
+	const SB = Statistikbanken
 
 	const init = function() {
 
 		//!!
-		Statistikbanken.data('FOLK1C', {
+		SB.data('FOLK1C', {
 			'OMRÅDE': ['000', '185', '791', '787'],
 			'KØN': '*',
 			'Tid': ['2010k2', '(1)']

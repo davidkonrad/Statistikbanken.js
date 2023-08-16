@@ -83,7 +83,7 @@ const Statistikbanken = (function() { // eslint-disable-line no-unused-vars
 		})
 		if (!data.length) {
 			console.log( Msg[language].ERR_NO_DATA )	
-			return null //!?
+			return '' //null //!?
 		} else {
 			return data
 		}

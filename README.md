@@ -1,12 +1,14 @@
 # Statistikbanken.js
 
-En lille javascript-funktion som indkapsler Statistikbankens API, se https://www.dst.dk/da/Statistik/brug-statistikken/muligheder-i-statistikbanken/api.
+En lille javascript-funktion som indkapsler Statistikbankens API.
 
-**Bemærk**: DST / Statistikbanken har intet at gøre med dette script. DST leverer beklageligvis ingen eksempler eller dokumentation på praktisk brug af API'et, så i forhold til javascript var det lidt try and error. Scriptet er så at sige lavet, fordi det manglede 🙃 
+Se https://www.dst.dk/da/Statistik/brug-statistikken/muligheder-i-statistikbanken/api.
+
+**Bemærk**: DST / Statistikbanken har intet at gøre med dette script. DST leverer desværre ingen eksempler eller dokumentation på praktisk brug af deres API, så i forhold til javascript er det lidt try and error. Scriptet er så at sige lavet, fordi det manglede 🙃 
 
 ### Fordele
 
-* Hurtigt at komme i gang med - een enkelt fil
+* Hurtigt at komme i gang med - én enkelt fil
 * Uniform / ensartet tilgang til DST's API
 * Automatisk parsing af JSON og CSV
 * Fejlhåndtering 
@@ -14,12 +16,21 @@ En lille javascript-funktion som indkapsler Statistikbankens API, se https://www
 
 ### Brug
 
-Statistikbanken.js er licenseret under MIT. Enhver kan frit bruge det, forke det, modificere det osv. Kun .js filen har betydning - hent repoet eller filen ned :
+Statistikbanken.js er licenseret under MIT. Enhver kan frit bruge det, forke det, modificere det etc. Opret et <a href="https://github.com/davidkonrad/Statistikbanken.js/issues">issue</a> hvis du har fundet en fejl eller synes der er noget som mangler. 
+
+Hent repoet ned :
+
+```bash
+git clone https://github.com/davidkonrad/Statistikbanken.js.git
+```
 
 ```html
-<script src="sti/til/Statistikbanken.js"></script>
+<script src="Statistikbanken.js/Statistikbanken.js"></script>
 ```
-En global funktion ```Statistikbanken``` kan herefter kaldes fra din øvrige javascript kode. Eksempler:
+
+Du kan nøjes med at kopiere denne fil ned, det er den eneste som har betydning.
+
+En global funktion ```Statistikbanken``` kan herefter kaldes fra den øvrige javascript kode. Eksempler:
 
 ```javascript
 Statistikbanken.subjects().then(function(result) {
@@ -32,8 +43,9 @@ Statistikbanken.tableInfo('FOLK1C').then(function(result) {
 Det giver måske mening at give Statistikbanken et shorthand alias :
 
 ```javascript
-const SB = Statistikbanken //benytter dette fremadrettet
+const SB = Statistikbanken //benytter dette alias fremadrettet
 ```
+
 
 ### init()
 
@@ -68,7 +80,7 @@ Eksempler
 
 ```javascript
 SB.init({ format: 'XML' })
-SB.init({ lang: 'en', cache: true })
+SB.init({ language: 'en', cache: true })
 ```
 Standardindstillingerne gælder indtil de ændres med ```init()```.
 
@@ -254,5 +266,8 @@ Den indbyggede cache er primitiv men yderst effektiv, hvis man hyppigt frekvente
 </tr>
 </tbody>
 </table>
+
+## Demo
+
 
 
