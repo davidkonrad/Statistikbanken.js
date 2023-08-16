@@ -5,7 +5,7 @@ En lille javascript-funktion som indkapsler Statistikbankens API.
 Se https://www.dst.dk/da/Statistik/brug-statistikken/muligheder-i-statistikbanken/api.
 
 
-**Bemærk** : DST / Statistikbanken har intet at gøre med dette script. DST leverer desværre ingen eksempler eller dokumentation på praktisk brug af deres API, så i forhold til javascript er det lidt try and error. Scriptet er så at sige lavet, fordi det manglede 🙃 
+**Bemærk**: DST / Statistikbanken har intet at gøre med dette script. DST leverer desværre ingen eksempler eller dokumentation på praktisk brug af deres API, så i forhold til javascript er det lidt *try and error*. Scriptet er så at sige lavet, fordi det manglede 🙃 
 
 ### Fordele
 
@@ -61,12 +61,12 @@ SB har nogle generelle indstillinger som løbende kan ændres via ```init()``` :
 <tbody>
 <tr>
 <td>language</td>
-<td>da</td>
-<td>da | en</td>
+<td>'da'</td>
+<td>'da' | 'en'</td>
 <tr>
 <td>format</td>
-<td>JSON</td>
-<td>JSON | XML</td>
+<td>'JSON'</td>
+<td>'JSON' | 'XML'</td>
 <tr>
 <td>cache</td>
 <td>false</td>
@@ -85,7 +85,7 @@ Standardindstillingerne gælder indtil de ændres med ```init()```.
 
 ## API
 
-For hver af DST's API-funktioner (se linket herover) findes der i SB en tilsvarende funktion med samme navn: ```subjects```, ```tableInfo```, ```tables``` og ```data```. 
+For hver af DST's API-funktioner (se linket herover), findes der i SB en tilsvarende funktion med samme navn: ```subjects```, ```tableInfo```, ```tables``` og ```data```. 
 
 ### .subjects()
 
@@ -216,7 +216,7 @@ SB.data('FOLK1C', {
 ```
 Befolkningsudviklingen i *Hele landet*, *Tårnby*, *Viborg* og *Thisted*; delt op *I alt*, *Mænd* og *Kvinder*; set ift. de to kvartaler *2010k2* og seneste kvartal. Dette giver 12 "serier" der f.eks kan vises som kurvediagram. 
 
-DST insisterer på at levere ```data()``` i CSV-format, her kan man ikke vælge JSON eller XML. En fornuftig politik, for den type data kan dårligt komprimeres bedre end med CSV, og vi taler om op til 1.000.000 poster per transaktion. JSON / XML ville give et kæmpe overhead. 
+DST insisterer på at levere ```data()``` i CSV-format, her kan man ikke vælge JSON eller XML. En fornuftig politik, eftersom denne type data kan dårligt komprimeres bedre end med CSV, og vi taler om op til 1.000.000 poster per transaktion. JSON / XML ville give et kæmpe overhead. 
 
 En respons fra Statistikbanken ser derfor (forskønnet) sådan her ud :
 
@@ -238,7 +238,7 @@ SB parser automatisk resultatet og returnerer et JSON array :
  {OMRÅDE: 'Hele landet', KØN: 'Mænd', TID: '2023K3', INDHOLD: '2955326'},
 ...]
 ```
- .. Lidt nemmere at arbejde med. Som krølle på halen kan det demonstreres, hvordan ```language``` faktisk gør en forskel. DST har vitterlig internationaliseret deres data! Med ```init({ language: 'en' })``` er resultatet for samme forespørgsel :
+ .. Lidt nemmere at arbejde med. Som krølle på halen kan det demonstreres, hvordan ```language``` faktisk gør en forskel. DST har vitterlig internationaliseret deres data,- med ```{ language: 'en' }``` er resultatet for samme forespørgsel :
 
 ```javascript
 [
