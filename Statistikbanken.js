@@ -1,6 +1,5 @@
 /*
  * (c) David Konrad, 2023- present
- * detfrieord.dk
  * 
  * Small script to access Statistics Denmark API
  * https://www.dst.dk/en/Statistik/brug-statistikken/muligheder-i-statistikbanken/api
@@ -69,7 +68,6 @@ const Statistikbanken = (function() { // eslint-disable-line no-unused-vars
 	}
 
 	const parseCSV = function(csv) {
-		console.log('csv', csv)
 		csv = csv.split(/\r?\n|\r|\n/g)
 		const props = csv[0].split(';')
 		const data = []
@@ -77,7 +75,7 @@ const Statistikbanken = (function() { // eslint-disable-line no-unused-vars
 			if (row && idx > 0) {
 				row = row.split(';')
 				let obj = {}
-				for (let i = 0; i<props.length; i++) {
+				for (let i = 0; i < props.length; i++) {
 					obj[props[i]] = row[i]
 				}
 				data.push(obj)
@@ -85,7 +83,7 @@ const Statistikbanken = (function() { // eslint-disable-line no-unused-vars
 		})
 		if (!data.length) {
 			console.log( Msg[language].ERR_NO_DATA )	
-			return null
+			return null //!?
 		} else {
 			return data
 		}

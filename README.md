@@ -49,13 +49,13 @@ SB har nogle generelle indstillinger som løbende kan ændres med ```init()``` :
 </thead>
 <tbody>
 <tr>
-<td>lang</td>
+<td>language</td>
 <td>da</td>
 <td>da | en</td>
 <tr>
 <td>format</td>
 <td>JSON</td>
-<td>JSON | XML | CSV</td>
+<td>JSON | XML</td>
 <tr>
 <td>cache</td>
 <td>false</td>
