@@ -4,7 +4,7 @@ En lille javascript-funktion som indkapsler Statistikbankens API.
 
 Se https://www.dst.dk/da/Statistik/brug-statistikken/muligheder-i-statistikbanken/api.
 
-[!NOTE] 
+[!NOTE]    
 DST / Statistikbanken har intet at gøre med dette script. DST leverer desværre ingen eksempler eller dokumentation på praktisk brug af deres API, så i forhold til javascript er det lidt try and error. Scriptet er så at sige lavet, fordi det manglede 🙃 
 
 ### Fordele
