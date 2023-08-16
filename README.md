@@ -4,8 +4,8 @@ En lille javascript-funktion som indkapsler Statistikbankens API.
 
 Se https://www.dst.dk/da/Statistik/brug-statistikken/muligheder-i-statistikbanken/api.
 
-[!NOTE]    
-DST / Statistikbanken har intet at gøre med dette script. DST leverer desværre ingen eksempler eller dokumentation på praktisk brug af deres API, så i forhold til javascript er det lidt try and error. Scriptet er så at sige lavet, fordi det manglede 🙃 
+
+**Bemærk** : DST / Statistikbanken har intet at gøre med dette script. DST leverer desværre ingen eksempler eller dokumentation på praktisk brug af deres API, så i forhold til javascript er det lidt try and error. Scriptet er så at sige lavet, fordi det manglede 🙃 
 
 ### Fordele
 
@@ -188,7 +188,7 @@ Hver tabel har et ```id```. Dette id bliver brugt af ```tableInfo``` og ```data(
 
 ### tableInfo()
 
-```tableInfo()``` returnerer detaljer om specifik tabel. Det er beskrivelse, fakta-link, kontaktinformation mv,- og vigtigst af alt information om tabellens felter og ```variables```. Det er ```variables``` man skal parse for at vide hvilke mulige forespørgselskriterier ```data()``` accepterer for den tabel.
+```tableInfo()``` returnerer detaljer om specifik tabel. Det er beskrivelse, fakta-link, kontaktinformation mv,- og vigtigst af alt information om tabellens felter og ```variables```. Det er ```variables``` man skal parse for at vide hvilke mulige forespørgselskriterier ```data()``` accepterer for den pågældende tabel.
 
 Et og kun et ```table_id``` er *påkrævet*, som nævnt kan de findes via ```tables()```. 
 
@@ -216,9 +216,9 @@ SB.data('FOLK1C', {
   console.log(result)
 })
 ```
-Befolkningsudviklingen i Hele landet, Tårnby, Viborg og Thisted; delt op I alt, Mænd og Kvinder; set ift. de to kvartaler 2010k2 og seneste kvartal. Det giver 12 "serier" der f.eks kan vises som kurvediagram. 
+Befolkningsudviklingen i *Hele landet*, *Tårnby*, *Viborg* og *Thisted*; delt op *I alt*, *Mænd* og *Kvinder*; set ift. de to kvartaler *2010k2* og seneste kvartal. Det giver 12 "serier" der f.eks kan vises som kurvediagram. 
 
-DST insisterer på at levere ```data()``` i CSV-format. Det kan (forskønnet) se sådan her ud :
+DST insisterer på at levere ```data()``` i CSV-format. Dette kan (forskønnet) se sådan her ud :
 
 ```
 OMRÅDE;KØN;TID;INDHOLD
@@ -228,16 +228,26 @@ Hele landet;Mænd;2010K2;2745983
 Hele landet;Mænd;2023K3;2955326
 ...
 ```
-Statistikbanken.js parser i stedet resultatet, og returnerer et array bestående af key/value objekter :
+SB parser i stedet resultatet og returnerer et JSON array :
 
 ```javascript
-[{OMRÅDE: 'Hele landet', KØN: 'I alt', TID: '2010K2', INDHOLD: '5540241'},
-{OMRÅDE: 'Hele landet', KØN: 'I alt', TID: '2023K3', INDHOLD: '5944145'},
-{OMRÅDE: 'Hele landet', KØN: 'Mænd', TID: '2010K2', INDHOLD: '2745983'},
-{OMRÅDE: 'Hele landet', KØN: 'Mænd', TID: '2023K3', INDHOLD: '2955326'}
-...
+[
+ {OMRÅDE: 'Hele landet', KØN: 'I alt', TID: '2010K2', INDHOLD: '5540241'},
+ {OMRÅDE: 'Hele landet', KØN: 'I alt', TID: '2023K3', INDHOLD: '5944145'},
+ {OMRÅDE: 'Hele landet', KØN: 'Mænd', TID: '2010K2', INDHOLD: '2745983'},
+ {OMRÅDE: 'Hele landet', KØN: 'Mænd', TID: '2023K3', INDHOLD: '2955326'},
+...]
 ```
-Det er lidt nemmere at arbejde med. 
+ .. Lidt nemmere at arbejde med. Som krølle på halen kan det demonstreres, hvordan ```language``` faktisk gør en forskel. DST har vitterlig internationaliseret deres data! Med ```{ language: 'en' }``` er resultatet for samme forespørgsel 
+
+```javascript
+[
+ {OMRÅDE: 'All Denmark', KØN: 'Total', TID: '2010Q2', INDHOLD: '5540241'},
+ {OMRÅDE: 'All Denmark', KØN: 'Total', TID: '2023Q3', INDHOLD: '5944145'},
+ {OMRÅDE: 'All Denmark', KØN: 'Men', TID: '2010Q2', INDHOLD: '2745983'},
+ {OMRÅDE: 'All Denmark', KØN: 'Men', TID: '2023Q3', INDHOLD: '2955326'},
+...]
+```
 
 ## Cache
 

@@ -22,6 +22,7 @@ const Demo = (function(window, document, Statistikbanken) {
 	const init = function() {
 
 		//!!
+		SB.init({ language: 'en' })
 		SB.data('FOLK1C', {
 			'OMRÅDE': ['000', '185', '791', '787'],
 			'KØN': '*',
