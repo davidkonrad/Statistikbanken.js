@@ -197,7 +197,7 @@ SB.tableInfo('SKAT').then(function(result) { })
 
 ### .data()
 
-Med ```data()``` henter du de egentlige statistikdata. Der skal angives et ```table_id``` (samme som ```tableInfo```) og et object med forespørgselsparametre :
+Med ```data()``` henter du de egentlige statistikdata. Der skal angives et ```table_id``` (samme som ```tableInfo```) og et JSON object med forespørgselsparametre :
 
 ```javascript
 SB.tableInfo(table_id, {...}).then(function(result) { })
@@ -216,9 +216,9 @@ SB.data('FOLK1C', {
 ```
 Befolkningsudviklingen i *Hele landet*, *Tårnby*, *Viborg* og *Thisted*; delt op *I alt*, *Mænd* og *Kvinder*; set ift. de to kvartaler *2010k2* og seneste kvartal. Dette giver 12 "serier" der f.eks kan vises som kurvediagram. 
 
-DST insisterer på at levere ```data()``` i CSV-format, her kan man ikke vælge JSON eller XML. En fornuftig politik, eftersom denne type data kan dårligt komprimeres bedre end med CSV, og vi taler om op til 1.000.000 poster per transaktion. JSON / XML ville give et kæmpe overhead. 
+DST insisterer på at levere ```data()``` i CSV-format, her kan man ikke vælge JSON eller XML. En fornuftig politik, eftersom denne type data dårligt kan komprimeres bedre end med CSV, og vi taler om op til 1.000.000 poster per transaktion. JSON / XML ville give et kæmpe overhead. 
 
-En respons fra Statistikbanken ser derfor (forskønnet) sådan her ud :
+En respons fra Statistikbanken kan derfor (forskønnet) se sådan her ud :
 
 ```
 OMRÅDE;KØN;TID;INDHOLD
