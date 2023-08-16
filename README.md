@@ -9,7 +9,7 @@ Se https://www.dst.dk/da/Statistik/brug-statistikken/muligheder-i-statistikbanke
 
 ### Fordele
 
-* Hurtigt at komme i gang med - én enkelt fil
+* Hurtigt at komme i gang - én enkelt fil
 * Uniform / ensartet tilgang til DST's API
 * Automatisk parsing af JSON og CSV
 * Fejlhåndtering 
@@ -29,9 +29,7 @@ git clone https://github.com/davidkonrad/Statistikbanken.js.git
 <script src="Statistikbanken.js/Statistikbanken.js"></script>
 ```
 
-Du kan nøjes med at kopiere denne fil ned, det er den eneste som har betydning.
-
-En global funktion ```Statistikbanken``` kan herefter kaldes fra den øvrige javascript kode. Eksempler:
+En global funktion ```Statistikbanken``` kan herefter kaldes fra den øvrige javascript kode. Eksempler :
 
 ```javascript
 Statistikbanken.subjects().then(function(result) {
@@ -48,9 +46,9 @@ const SB = Statistikbanken //benytter dette alias fremadrettet
 ```
 
 
-### init()
+### .init()
 
-SB har nogle generelle indstillinger som løbende kan ændres med ```init()``` : 
+SB har nogle generelle indstillinger som løbende kan ændres via ```init()``` : 
 
 <table>
 <thead>
@@ -89,7 +87,7 @@ Standardindstillingerne gælder indtil de ændres med ```init()```.
 
 For hver af DST's API-funktioner (se linket herover) findes der i SB en tilsvarende funktion med samme navn: ```subjects```, ```tableInfo```, ```tables``` og ```data```. 
 
-### subjects()
+### .subjects()
 
 ```subjects()``` leverer oplysninger om statstikbankens forskellige kategorier (eller *emner*). Disse er hierarkisk ordnet i niveauer. En tom forespørgsel :
 
@@ -142,7 +140,7 @@ SB.subjects({
 })
 ```
 
-### tables
+### .tables()
 ```tables()``` leverer oplysninger om API'ets tabeller (statistikker). En tom forespørgsel returnerer alle aktive tabeller :
 
 ```javascript
@@ -186,26 +184,26 @@ SB.tables({
 ```
 Hver tabel har et ```id```. Dette id bliver brugt af ```tableInfo``` og ```data()```.
 
-### tableInfo()
+### .tableInfo()
 
-```tableInfo()``` returnerer detaljer om specifik tabel. Det er beskrivelse, fakta-link, kontaktinformation mv,- og vigtigst af alt information om tabellens felter og ```variables```. Det er ```variables``` man skal parse for at vide hvilke mulige forespørgselskriterier ```data()``` accepterer for den pågældende tabel.
+```tableInfo()``` returnerer detaljer om specifik tabel. Det er beskrivelse, fakta-link, kontaktinformation mv,- og vigtigst af alt: Information om tabellens felter og ```variables```. Det er ```variables``` man skal parse for at vide hvilke mulige forespørgselskriterier ```data()``` accepterer for den pågældende tabel.
 
-Et og kun et ```table_id``` er *påkrævet*, som nævnt kan de findes via ```tables()```. 
+Et og kun ét ```table_id``` er *påkrævet*, som nævnt kan de findes via ```tables()```. 
 
 ```javascript
 SB.tableInfo('FOLK3').then(function(result) { })
 SB.tableInfo('SKAT').then(function(result) { })
 ```
 
-### data()
+### .data()
 
-Med ```data()``` henter du de egentlige statistikdata. Der skal angives et table_id (samme som tableInfo) og et object med forespørgselsparametre :
+Med ```data()``` henter du de egentlige statistikdata. Der skal angives et ```table_id``` (samme som ```tableInfo```) og et object med forespørgselsparametre :
 
 ```javascript
 SB.tableInfo(table_id, {...}).then(function(result) { })
 ```
 
-Alle parametre *skal* være gyldige, ellers fejler opslaget hos DST. Med "gyldige" menes, at de nøje skal følge anvisningerne fra tableInfo()'s ```variables```. De fleste tabeller har en unik sammensætning af variabler og virkefelter. For eksempel, nogle statistikker går kun fra 2011 - 2017, og hvis man forespørger uden for dette tidsspand fejler opslaget. Eksempel på forespørgsel, "*Folketal den 1. i kvartalet* ..." :
+Alle parametre *skal* være gyldige, ellers fejler opslaget hos DST. Med "gyldige" menes, at de nøje skal følge anvisningerne fra ```tableInfo()```'s ```variables```. De fleste tabeller har en unik sammensætning af variabler og virkefelter. For eksempel, nogle statistikker går kun fra 2011 - 2017, og hvis man forespørger uden for dette tidsspand fejler opslaget. Eksempel på forespørgsel, "*Folketal den 1. i kvartalet* ..." :
 
 ```javascript
 SB.data('FOLK1C', {
@@ -216,9 +214,11 @@ SB.data('FOLK1C', {
   console.log(result)
 })
 ```
-Befolkningsudviklingen i *Hele landet*, *Tårnby*, *Viborg* og *Thisted*; delt op *I alt*, *Mænd* og *Kvinder*; set ift. de to kvartaler *2010k2* og seneste kvartal. Det giver 12 "serier" der f.eks kan vises som kurvediagram. 
+Befolkningsudviklingen i *Hele landet*, *Tårnby*, *Viborg* og *Thisted*; delt op *I alt*, *Mænd* og *Kvinder*; set ift. de to kvartaler *2010k2* og seneste kvartal. Dette giver 12 "serier" der f.eks kan vises som kurvediagram. 
 
-DST insisterer på at levere ```data()``` i CSV-format. Dette kan (forskønnet) se sådan her ud :
+DST insisterer på at levere ```data()``` i CSV-format, her kan man ikke vælge JSON eller XML. En fornuftig politik, for den type data kan dårligt komprimeres bedre end med CSV, og vi taler om op til 1.000.000 poster per transaktion. JSON / XML ville give et kæmpe overhead. 
+
+En respons fra Statistikbanken ser derfor (forskønnet) sådan her ud :
 
 ```
 OMRÅDE;KØN;TID;INDHOLD
@@ -228,7 +228,7 @@ Hele landet;Mænd;2010K2;2745983
 Hele landet;Mænd;2023K3;2955326
 ...
 ```
-SB parser i stedet resultatet og returnerer et JSON array :
+SB parser automatisk resultatet og returnerer et JSON array :
 
 ```javascript
 [
@@ -238,7 +238,7 @@ SB parser i stedet resultatet og returnerer et JSON array :
  {OMRÅDE: 'Hele landet', KØN: 'Mænd', TID: '2023K3', INDHOLD: '2955326'},
 ...]
 ```
- .. Lidt nemmere at arbejde med. Som krølle på halen kan det demonstreres, hvordan ```language``` faktisk gør en forskel. DST har vitterlig internationaliseret deres data! Med ```{ language: 'en' }``` er resultatet for samme forespørgsel 
+ .. Lidt nemmere at arbejde med. Som krølle på halen kan det demonstreres, hvordan ```language``` faktisk gør en forskel. DST har vitterlig internationaliseret deres data! Med ```init({ language: 'en' })``` er resultatet for samme forespørgsel :
 
 ```javascript
 [
@@ -282,3 +282,4 @@ Den indbyggede cache er primitiv men yderst effektiv, hvis man hyppigt frekvente
 
 ```/demo/index.html``` fungerer som demo eller en slags "playground". 
 
+Hvis du er forvirret efter at have skimmet ovenstående "manual", kan du prøve demoen og i koden se præcis hvordan man kalder SB.
