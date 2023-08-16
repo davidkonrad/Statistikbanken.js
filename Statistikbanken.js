@@ -67,25 +67,27 @@ const Statistikbanken = (function() { // eslint-disable-line no-unused-vars
 		}
 	}
 
-	const parseCSV = function(csv) {
-		csv = csv.split(/\r?\n|\r|\n/g)
-		const props = csv[0].split(';')
-		const data = []
-		csv.forEach(function(row, idx) {
-			if (row && idx > 0) {
-				row = row.split(';')
-				let obj = {}
-				for (let i = 0; i < props.length; i++) {
-					obj[props[i]] = row[i]
+	const CSV = {
+		parse: function(csv) {
+			csv = csv.split(/\r?\n|\r|\n/g)
+			const props = csv[0].split(';')
+			const data = []
+			csv.forEach(function(row, idx) {
+				if (row && idx > 0) {
+					row = row.split(';')
+					let obj = {}
+					for (let i = 0; i < props.length; i++) {
+						obj[props[i]] = row[i]
+					}
+					data.push(obj)
 				}
-				data.push(obj)
+			})
+			if (!data.length) {
+				console.log( Msg[language].ERR_NO_DATA )	
+				return '' //!
+			} else {
+				return data
 			}
-		})
-		if (!data.length) {
-			console.log( Msg[language].ERR_NO_DATA )	
-			return '' //!
-		} else {
-			return data
 		}
 	}
 
@@ -105,7 +107,7 @@ const Statistikbanken = (function() { // eslint-disable-line no-unused-vars
 						resolve( JSON.parse(data) )
 						break
 					case 'CSV':
-						resolve( parseCSV(data) )
+						resolve( CSV.parse(data) )
 						break
 					default:
 						resolve( data )
