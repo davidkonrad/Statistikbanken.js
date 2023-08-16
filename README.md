@@ -29,15 +29,15 @@ Statistikbanken.tableInfo('FOLK1C').then(function(result) {
   console.log(result)
 })
 ```
-Det giver måske mening at give Statistikbanken en shorthand :
+Det giver måske mening at give Statistikbanken et shorthand alias :
 
 ```javascript
-const SB = Statistikbanken 
+const SB = Statistikbanken //benytter dette fremadrettet
 ```
 
 ### init()
 
-Statistikbanken.js har nogle generelle indstillinger som løbende kan ændres med ```init()``` : 
+SB har nogle generelle indstillinger som løbende kan ændres med ```init()``` : 
 
 <table>
 <thead>
@@ -67,21 +67,21 @@ Statistikbanken.js har nogle generelle indstillinger som løbende kan ændres me
 Eksempler 
 
 ```javascript
-Statistikbanken.init({ format: 'XML' })
-Statistikbanken.init({ lang: 'en', cache: true })
+SB.init({ format: 'XML' })
+SB.init({ lang: 'en', cache: true })
 ```
 Standardindstillingerne gælder indtil de ændres med ```init()```.
 
 ## API
 
-For hver af DST's API-funktioner (se linket herover) findes der i Statistikbanken.js en tilsvarende funktion med samme navn: ```subjects```, ```tableInfo```, ```tables``` og ```data```. 
+For hver af DST's API-funktioner (se linket herover) findes der i SB en tilsvarende funktion med samme navn: ```subjects```, ```tableInfo```, ```tables``` og ```data```. 
 
 ### subjects()
 
 ```subjects()``` leverer oplysninger om statstikbankens forskellige kategorier (eller *emner*). Disse er hierarkisk ordnet i niveauer. En tom forespørgsel :
 
 ```javascript
-Statistikbanken.subjects().then(function(result) {
+SB.subjects().then(function(result) {
   console.log(result)
 })
 ```
@@ -121,7 +121,7 @@ Returnerer det øverste niveau. Mulige parametre :
 Eksempel:
 
 ```javascript
-Statistikbanken.subjects({
+SB.subjects({
   subjects: [13, 17, 19],
   includeTables: true
 }).then(function(result) {
@@ -133,7 +133,7 @@ Statistikbanken.subjects({
 ```tables()``` leverer oplysninger om API'ets tabeller (statistikker). En tom forespørgsel returnerer alle aktive tabeller :
 
 ```javascript
-Statistikbanken.tables().then(function(result) { })
+SB.tables().then(function(result) { })
 ```
 Mulige parametre :
 <table>
@@ -164,9 +164,9 @@ Mulige parametre :
 Eksempler : 
 
 ```javascript
-Statistikbanken.tables({ includeInactive: true }).then(function(result) { })
+SB.tables({ includeInactive: true }).then(function(result) { })
 
-Statistikbanken.tables({ 
+SB.tables({ 
   subjects: [13, 17, 19],
   pastDays: 47
 }).then(function(result) { })
@@ -180,8 +180,8 @@ Hver tabel har et ```id```. Dette id bliver brugt af ```tableInfo``` og ```data(
 Et og kun et ```table_id``` er *påkrævet*, som nævnt kan de findes via ```tables()```. 
 
 ```javascript
-Statistikbanken.tableInfo('FOLK3').then(function(result) { })
-Statistikbanken.tableInfo('SKAT').then(function(result) { })
+SB.tableInfo('FOLK3').then(function(result) { })
+SB.tableInfo('SKAT').then(function(result) { })
 ```
 
 ### data()
@@ -189,13 +189,13 @@ Statistikbanken.tableInfo('SKAT').then(function(result) { })
 Med ```data()``` henter du de egentlige statistikdata. Der skal angives et table_id (samme som tableInfo) og et object med forespørgselsparametre :
 
 ```javascript
-Statistikbanken.tableInfo(table_id, {...}).then(function(result) { })
+SB.tableInfo(table_id, {...}).then(function(result) { })
 ```
 
 Alle parametre *skal* være gyldige, ellers fejler opslaget hos DST. Med "gyldige" menes, at de nøje skal følge anvisningerne fra tableInfo()'s ```variables```. De fleste tabeller har en unik sammensætning af variabler og virkefelter. For eksempel, nogle statistikker går kun fra 2011 - 2017, og hvis man forespørger uden for dette tidsspand fejler opslaget. Eksempel på forespørgsel, "*Folketal den 1. i kvartalet* ..." :
 
 ```javascript
-Statistikbanken.data('FOLK1C', {
+SB.data('FOLK1C', {
   'OMRÅDE': ['000', '185', '791', '787'],
   'KØN': '*',
   'Tid': ['2010k2', '(1)']
@@ -240,15 +240,15 @@ Den indbyggede cache er primitiv men yderst effektiv, hvis man hyppigt frekvente
 </thead>
 <tbody>
 <tr>
-<td>Statistikbanken.cache.empty()</td>
+<td>SB.cache.empty()</td>
 <td>Tømmer cache</td>
 <td></td>
 <tr>
-<td>Statistikbanken.cache.hits</td>
+<td>SB.cache.hits</td>
 <td>Antal opslag i cachen</td>
 <td>42</td>
 <tr>
-<td>Statistikbanken.cache.bytes</td>
+<td>SB.cache.bytes</td>
 <td>Antal bytes sparet</td>
 <td>14247</td>
 </tr>
