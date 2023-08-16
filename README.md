@@ -17,7 +17,7 @@ Se https://www.dst.dk/da/Statistik/brug-statistikken/muligheder-i-statistikbanke
 
 ### Brug
 
-Statistikbanken.js er licenseret under MIT. Enhver kan frit bruge det, forke det, modificere det etc. Opret et <a href="https://github.com/davidkonrad/Statistikbanken.js/issues">issue</a> hvis du har fundet en fejl eller synes der er noget som mangler. 
+Statistikbanken.js er licenseret under MIT. Enhver kan frit bruge det, forke det, udnytte det kommercielt, modificere det etc. Opret et <a href="https://github.com/davidkonrad/Statistikbanken.js/issues">issue</a> hvis du har fundet en fejl eller synes der er noget som mangler. 
 
 Hent repoet ned :
 
@@ -186,7 +186,7 @@ Hver tabel har et ```id```. Dette id bliver brugt af ```tableInfo``` og ```data(
 
 ### .tableInfo()
 
-```tableInfo()``` returnerer detaljer om specifik tabel. Det er beskrivelse, fakta-link, kontaktinformation mv,- og vigtigst af alt: Information om tabellens felter og ```variables```. Det er ```variables``` man skal parse for at vide hvilke mulige forespørgselskriterier ```data()``` accepterer for den pågældende tabel.
+```tableInfo()``` returnerer detaljer om en specifik tabel. Det er beskrivelse, fakta-link, kontaktinformation mv,- og vigtigst af alt: Information om tabellens felter og ```variables```. Det er ```variables``` man skal parse for at vide hvilke mulige forespørgselskriterier ```data()``` accepterer for den pågældende tabel.
 
 Et og kun ét ```table_id``` er *påkrævet*, som nævnt kan de findes via ```tables()```. 
 
