@@ -90,6 +90,7 @@ const Statistikbanken = (function() { // eslint-disable-line no-unused-vars
 	}
 
 	const get = function(path) {
+
 		const append = function(name, value) {
 			path += path.indexOf('?') === -1 ? '?' : '&'
 			path += name + '=' + value
@@ -98,10 +99,7 @@ const Statistikbanken = (function() { // eslint-disable-line no-unused-vars
 		append('format', data_format)
 
 		return new Promise((resolve) => {
-			if (cache.test(path)) {
-				const data = cache.get(path)
-				cache_bytes += data.length
-				cache_hits += 1
+			const process = function(data) {
 				switch (data_format) {
 					case 'JSON':
 						resolve( JSON.parse(data) )
@@ -113,6 +111,12 @@ const Statistikbanken = (function() { // eslint-disable-line no-unused-vars
 						resolve( data )
 						break
 				}
+			}
+			if (use_cache && cache.test(path)) {
+				const data = cache.get(path)
+				cache_bytes += data.length
+				cache_hits += 1
+				process(data)
 			} else {
 				fetch(path, { 
 					method: 'GET'
@@ -120,17 +124,7 @@ const Statistikbanken = (function() { // eslint-disable-line no-unused-vars
 					return res.text()
 				}).then(function(res) {
 					if (use_cache) cache.set(path, res)
-					switch (data_format) {
-						case 'JSON':
-							resolve( JSON.parse(res) )
-							break
-						case 'CSV':
-							resolve( parseCSV(res) )
-							break
-						default:
-							resolve( res )
-							break
-					}
+					process(res)
 				})
 				.catch(function(error) {
 					console.log( Msg[language].ERR_FETCH )

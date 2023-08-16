@@ -20,17 +20,6 @@ const Demo = (function(window, document, Statistikbanken) {
 	const SB = Statistikbanken
 
 	const init = function() {
-
-		//!!
-		SB.init({ language: 'en' })
-		SB.data('FOLK1C', {
-			'OMRÅDE': ['000', '185', '791', '787'],
-			'KØN': '*',
-			'Tid': ['2010k2', '(1)']
-		}).then(function(result) {
-			console.log(result)
-		})
-
 		initSettings()
 		initCtrls()
 		Statistikbanken.cache.empty()
