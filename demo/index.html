@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="da" translate="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+<link rel="shortcut icon" href="#">
+<title>Statistikbanken.js - test</title>
+<script src="../Statistikbanken.js"></script>
+<script src="demo.js"></script>
+<style>
+body {
+	width: 800px;
+	margin: auto;
+	font-family: arial, serif;
+}
+body.wait,
+body.wait > * { 
+	cursor: wait !important;
+	box-shadow: 0 0 0 100vmax rgba(80, 80, 80, .1);
+}
+label {
+	margin-right: .5rem;
+}
+input[type="number"] {
+	width: 50px;
+}
+div.result {
+	font-family: mono;
+	width: 100%;
+	min-height: 1rem;
+	max-height: 7rem;
+	overflow: auto;
+	border-radius: 3px;
+	padding: .5rem;
+	font-size: small;
+	border: 1px solid #ebebeb;
+	background-color: #fafafa;
+}
+</style>
+</head>
+<body>
+
+<h1>Statistikbanken.js - Test</h1>
+
+<label>
+	<input type="checkbox" id="checkbox-cache">
+	Cache
+</label>·
+<label>
+	<input type="radio" name="radio-language" value="en">
+	English
+</label>
+<label>
+	<input type="radio" name="radio-language" value="da" checked>
+	Dansk
+</label>·
+<label>
+	<input type="radio" name="radio-data-format" value="JSON" checked>
+	JSON
+</label>
+<label>
+	<input type="radio" name="radio-data-format" value="XML">
+	XML
+</label>
+<label>
+	<input type="radio" name="radio-data-format" value="CSV">
+	CSV
+</label>
+
+<h2>subjects</h2>
+<form id="form-subjects">
+	<label>
+		subjects
+		<input type="text" name="subjects" placeholder="1,2 ...">
+	</label>
+	<label>
+		<input type="checkbox" name="includeTables">
+		includeTables
+	</label>
+	<label>
+		<input type="checkbox" name="recursive">
+		recursive
+	</label>
+	<label>
+		<input type="checkbox" name="omitInactiveSubjects">
+		omitInactiveSubjects
+	</label>
+	<br><br><button type="button" id="btn-run-subjects">⚙️ Run</button><br><br>
+	<div class="result" id="result-subjects"></div>
+	<code id="result-subjects-length"></code>
+</form>
+
+<h2>tables</h2>
+<form id="form-tables">
+	<label>
+		subjects
+		<input type="text" name="subjects" placeholder="1,2 ...">
+	</label>
+	<label>
+		pastdays
+		<input type="number" name="pastdays">
+	</label>
+	<label>
+		<input type="checkbox" name="includeInactive">
+		includeInactive
+	</label>
+	<br><br><button type="button" id="btn-run-tables">⚙️ Run</button><br><br>
+	<div class="result" id="result-tables"></div>
+	<code id="result-tables-length"></code>
+</form>
+
+<h2>tableInfo</h2>
+<form id="form-tableinfo" spellcheck="false">
+	<label>
+		table
+		<input type="text" name="table" value="folk1c">
+	</label>
+	<br><br><button type="button" id="btn-run-tableinfo">⚙️ Run</button><br><br>
+	<div class="result" id="result-tableinfo"></div>
+	<code id="result-tableinfo-length"></code>
+</form>
+
+<h2>data</h2>
+<br><br><button type="button" id="btn-run-data">⚙️ Run</button><br><br>
+<div class="result" id="result-data"></div>
+<code id="result-data-length"></code>
+
+<br><br>
+<div class="result" id="result-cache">
+	<span><strong>Cache</strong>: <code id="cache-hits">0</code> hits, <code id="cache-bytes">0 bytes</code></span>
+</div>
+<br><br>
+
+</body>
+</html>
+
+
+
+
