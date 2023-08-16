@@ -230,7 +230,7 @@ Hele landet;Mænd;2023K3;2955326
 ```
 Statistikbanken.js parser i stedet resultatet, og returnerer et array bestående af key/value objekter :
 
-```json
+```javascript
 [{OMRÅDE: 'Hele landet', KØN: 'I alt', TID: '2010K2', INDHOLD: '5540241'},
 {OMRÅDE: 'Hele landet', KØN: 'I alt', TID: '2023K3', INDHOLD: '5944145'},
 {OMRÅDE: 'Hele landet', KØN: 'Mænd', TID: '2010K2', INDHOLD: '2745983'},
@@ -241,7 +241,7 @@ Det er lidt nemmere at arbejde med.
 
 ## Cache
 
-Den indbyggede cache er primitiv men yderst effektiv, hvis man hyppigt frekventerer de samme tabeller. Cachen er baseret på localStorage, så der findes en øvre kvota på 5mb. 
+Den indbyggede cache er primitiv men yderst effektiv, hvis man hyppigt frekventerer de samme tabeller. Cachen er baseret på ```localStorage```, så der findes en øvre kvota på 5mb. 
 
 <table>
 <thead>
@@ -270,5 +270,5 @@ Den indbyggede cache er primitiv men yderst effektiv, hvis man hyppigt frekvente
 
 ## Demo
 
-
+```/demo/index.html``` fungerer som demo eller en slags "playground". 
 
