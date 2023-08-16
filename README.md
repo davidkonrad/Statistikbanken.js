@@ -99,7 +99,7 @@ SB.subjects().then(function(result) {
 })
 ```
 
-Returnerer det øverste niveau. Mulige parametre :
+Returnerer det øverste niveau. Som udgangspunkt i ```JSON```. Mulige parametre :
 
 <table>
 <thead>
@@ -230,10 +230,10 @@ Hele landet;Mænd;2023K3;2955326
 ```
 Statistikbanken.js parser i stedet resultatet, og returnerer et array bestående af key/value objekter :
 
-```
-{OMRÅDE: 'Hele landet', KØN: 'I alt', TID: '2010K2', INDHOLD: '5540241'}
-{OMRÅDE: 'Hele landet', KØN: 'I alt', TID: '2023K3', INDHOLD: '5944145'}
-{OMRÅDE: 'Hele landet', KØN: 'Mænd', TID: '2010K2', INDHOLD: '2745983'}
+```json
+[{OMRÅDE: 'Hele landet', KØN: 'I alt', TID: '2010K2', INDHOLD: '5540241'},
+{OMRÅDE: 'Hele landet', KØN: 'I alt', TID: '2023K3', INDHOLD: '5944145'},
+{OMRÅDE: 'Hele landet', KØN: 'Mænd', TID: '2010K2', INDHOLD: '2745983'},
 {OMRÅDE: 'Hele landet', KØN: 'Mænd', TID: '2023K3', INDHOLD: '2955326'}
 ...
 ```
