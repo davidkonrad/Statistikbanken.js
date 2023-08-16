@@ -1,10 +1,11 @@
-# Statistikbanken.js
+# 📈 Statistikbanken.js
 
 En lille javascript-funktion som indkapsler Statistikbankens API.
 
 Se https://www.dst.dk/da/Statistik/brug-statistikken/muligheder-i-statistikbanken/api.
 
-**Bemærk**: DST / Statistikbanken har intet at gøre med dette script. DST leverer desværre ingen eksempler eller dokumentation på praktisk brug af deres API, så i forhold til javascript er det lidt try and error. Scriptet er så at sige lavet, fordi det manglede 🙃 
+[!NOTE] 
+DST / Statistikbanken har intet at gøre med dette script. DST leverer desværre ingen eksempler eller dokumentation på praktisk brug af deres API, så i forhold til javascript er det lidt try and error. Scriptet er så at sige lavet, fordi det manglede 🙃 
 
 ### Fordele
 
@@ -20,7 +21,7 @@ Statistikbanken.js er licenseret under MIT. Enhver kan frit bruge det, forke det
 
 Hent repoet ned :
 
-```bash
+```sh
 git clone https://github.com/davidkonrad/Statistikbanken.js.git
 ```
 
@@ -40,7 +41,7 @@ Statistikbanken.tableInfo('FOLK1C').then(function(result) {
   console.log(result)
 })
 ```
-Det giver måske mening at give Statistikbanken et shorthand alias :
+Det giver måske mening at tildele ```Statistikbanken``` et shorthand alias :
 
 ```javascript
 const SB = Statistikbanken //benytter dette alias fremadrettet
