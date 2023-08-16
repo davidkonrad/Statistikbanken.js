@@ -5,7 +5,7 @@ En lille javascript-funktion som indkapsler Statistikbankens API.
 Se https://www.dst.dk/da/Statistik/brug-statistikken/muligheder-i-statistikbanken/api.
 
 
-**Bemærk**: DST / Statistikbanken har intet at gøre med dette script. DST leverer desværre ingen eksempler eller dokumentation på praktisk brug af deres API, så i forhold til javascript er det lidt *try and error*. Scriptet er så at sige lavet, fordi det manglede 🙃 
+**Bemærk**: DST / Statistikbanken har intet at gøre med dette script. DST leverer desværre ingen eksempler eller dokumentation på praktisk brug af deres API, så i forhold til javascript var det lidt *try and error*. Scriptet er så at sige lavet, fordi det manglede 🙃 
 
 ### Fordele
 
@@ -89,7 +89,7 @@ For hver af DST's API-funktioner (se linket herover), findes der i SB en tilsvar
 
 ### .subjects()
 
-```subjects()``` leverer oplysninger om statstikbankens forskellige kategorier (eller *emner*). Disse er hierarkisk ordnet i niveauer. En tom forespørgsel :
+```subjects()``` leverer oplysninger om Statistikbankens forskellige kategorier (eller *emner*). Disse er hierarkisk ordnet i niveauer. En tom forespørgsel :
 
 ```javascript
 SB.subjects().then(function(result) {
@@ -179,7 +179,7 @@ SB.tables({ includeInactive: true }).then(function(result) { })
 
 SB.tables({ 
   subjects: [13, 17, 19],
-  pastDays: 47
+  pastdays: 47
 }).then(function(result) { })
 ```
 Hver tabel har et ```id```. Dette id bliver brugt af ```tableInfo``` og ```data()```.
@@ -282,4 +282,4 @@ Den indbyggede cache er primitiv men yderst effektiv, hvis man hyppigt frekvente
 
 ```/demo/index.html``` fungerer som demo eller en slags "playground". 
 
-Hvis du er forvirret efter at have skimmet ovenstående "manual", kan du prøve demoen og i koden se præcis hvordan man kalder SB.
+Hvis du er forvirret efter at have skimmet ovenstående "manual" (det kender jeg godt, det er nemmere bare at se hvordan det gøres), kan du prøve demoen og i koden se præcis hvordan man kalder ```SB```.
