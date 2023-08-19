@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
 <link rel="shortcut icon" href="#">
-<title>Statistikbanken.js - test</title>
+<title>Statistikbanken.js - playground</title>
 <script src="../Statistikbanken.js"></script>
 <script src="demo.js"></script>
 <style>
@@ -24,6 +24,25 @@ label {
 input[type="number"] {
 	width: 50px;
 }
+#variables-cnt {
+	display: flex;
+}
+.italic {
+	font-style: italic;
+}
+div.variable-cnt {
+	float: left;
+}
+div.variable-cnt label {
+	font-size: small;
+}
+#btn-run-data {
+	clear: left;
+	display: block;
+	float: left;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+}
 div.result {
 	font-family: mono;
 	width: 100%;
@@ -40,7 +59,7 @@ div.result {
 </head>
 <body>
 
-<h1>Statistikbanken.js - Test</h1>
+<h1>Statistikbanken.js - playground</h1>
 
 <label>
 	<input type="checkbox" id="checkbox-cache">
@@ -117,9 +136,15 @@ div.result {
 </form>
 
 <h2>data</h2>
-<br><br><button type="button" id="btn-run-data">⚙️ Run</button><br><br>
-<div class="result" id="result-data"></div>
-<code id="result-data-length"></code>
+<form id="form-data" spellcheck="false">
+	<input type="hidden" id="data-tableid">
+	<label><input type="radio" name="radio-data-data-format" value="CSV" checked>CSV</label>
+	<label><input type="radio" name="radio-data-data-format" value="BULK">BULK</label>
+	<div id="variables-cnt"></div>
+	<button type="button" id="btn-run-data" disabled>⚙️ Run</button><br><br>
+	<div class="result" id="result-data"></div>
+	<code id="result-data-length"></code>
+</form>
 
 <br><br>
 <div class="result" id="result-cache">

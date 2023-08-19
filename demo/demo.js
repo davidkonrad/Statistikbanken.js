@@ -66,12 +66,46 @@ const Demo = (function(window, document, Statistikbanken) {
 		})
 	}
 
+	const initVariables = function(table_info) {
+		gebi('btn-run-data').removeAttribute('disabled')
+		gebi('data-tableid').value = table_info.id
+
+		const varCnt = gebi('variables-cnt')
+		varCnt.innerText = ''
+
+		const getSelect = function(variable) {
+			const italic = !variable.elimination ? 'class="italic"' : ''
+			const cnt = `<div class="variable-cnt">
+				<label ${italic}">${variable.text}</label><br>
+				<select multiple size="8" name="${variable.id}"></select>
+				</div>
+			`
+			varCnt.insertAdjacentHTML('beforeend', cnt)
+			return varCnt.querySelector(`select[name="${variable.id}"]`)
+		}
+
+		const initSelect = function(variable) {
+			const select = getSelect(variable)
+			variable.values.forEach(function(v) {
+				const option = document.createElement('option')
+				option.value = v.id
+				option.textContent = v.text 
+				select.append(option)
+			})
+		}
+				
+		table_info.variables.forEach(function(variable) {
+			initSelect(variable)
+		})
+	}
+
 	const updateCache = function() {
 		gebi('cache-hits').textContent = Statistikbanken.cache.hits
 		gebi('cache-bytes').textContent = N.format(Statistikbanken.cache.bytes)
 	}
 
 	const initCtrls = function() {
+
 		const process = function(name, result) {
 			switch (data_format) {
 				case 'JSON':
@@ -89,28 +123,45 @@ const Demo = (function(window, document, Statistikbanken) {
 			updateCache()
 			wait()
 		}
+
 		gebi('btn-run-subjects').onclick = function() {
 			wait()
+			console.log(getParams('form-subjects'))
 			Statistikbanken.subjects(getParams('form-subjects')).then(function(result) {
 				process('subjects', result)
 			})
 		}
+
 		gebi('btn-run-tables').onclick = function() {
 			wait()
 			Statistikbanken.tables(getParams('form-tables')).then(function(result) {
 				process('tables', result)
 			})
 		}
+
 		gebi('btn-run-tableinfo').onclick = function() {
 			const table_id = gebi('form-tableinfo').querySelector('input').value
 			wait()
 			Statistikbanken.tableInfo(table_id).then(function(result) {
+				initVariables(result)	
 				process('tableinfo', result)
 			})
 		}
+
 		gebi('btn-run-data').onclick = function() {
-			const table_id = 'BEBRIT20'
-			const params = { Type: 10, FORMÅL:[10,20], Tid:[2016,2018,2020] }
+			const params = {}
+			const table_id = gebi('data-tableid').value
+
+			qall('#variables-cnt select').forEach(function(select) {
+				if (select.value) {
+					const values = []
+					for (const option of select.options) {
+						if (option.selected) values.push(option.value)
+					}
+					params[select.name] = values
+				}
+			})
+
 			wait()
 			Statistikbanken.data(table_id, params).then(function(result) {
 				process('data', result)
