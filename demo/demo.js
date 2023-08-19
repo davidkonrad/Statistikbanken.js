@@ -106,19 +106,23 @@ const Demo = (function(window, document, Statistikbanken) {
 	const initCtrls = function() {
 
 		const process = function(name, result) {
+			let text = undefined
 			switch (data_format) {
 				case 'JSON':
 					console.log(result)
-					break
+					text = JSON.stringify(result) 
+					break 
 				case 'XML':
 					console.dirxml(result)
+					text = new XMLSerializer().serializeToString(result) 
 					break
 				default:
 					console.dir(result)
+					text = result
 					break
 			}
-			gebi('result-' + name).innerText = data_format === 'JSON' ? JSON.stringify(result) : result
-			gebi('result-' + name + '-length').innerText = data_format === 'JSON' ? JSON.stringify(result).length : result.toString().length //!?
+			gebi('result-' + name).innerText = text
+			gebi('result-' + name + '-length').innerText = text.length
 			updateCache()
 			wait()
 		}

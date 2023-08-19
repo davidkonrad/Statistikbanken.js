@@ -91,6 +91,12 @@ const Statistikbanken = (function() { // eslint-disable-line no-unused-vars
 		}
 	}
 
+	const XML = {
+		parse: function(xml) {
+			return new DOMParser().parseFromString(xml, "application/xml")
+		}
+	}
+
 	const get = function(path) {
 
 		const append = function(name, value) {
@@ -108,6 +114,9 @@ const Statistikbanken = (function() { // eslint-disable-line no-unused-vars
 						break
 					case 'CSV':
 						resolve( CSV.parse(data) )
+						break
+					case 'XML':
+						resolve( XML.parse(data) )
 						break
 					default:
 						resolve( data )
