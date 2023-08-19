@@ -17,7 +17,6 @@ const Demo = (function(window, document, Statistikbanken) {
 	})
 
 	let data_format = 'JSON'
-	const SB = Statistikbanken
 
 	const init = function() {
 		initSettings()
@@ -126,7 +125,6 @@ const Demo = (function(window, document, Statistikbanken) {
 
 		gebi('btn-run-subjects').onclick = function() {
 			wait()
-			console.log(getParams('form-subjects'))
 			Statistikbanken.subjects(getParams('form-subjects')).then(function(result) {
 				process('subjects', result)
 			})

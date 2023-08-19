@@ -163,7 +163,12 @@ const Statistikbanken = (function() { // eslint-disable-line no-unused-vars
 	}					
 			
 	const subjects = function(params) {
-		return get( Path + 'subjects' + objToRequest(params) )
+		let path = Path + 'subjects'
+		if (params && params.subjects) {
+			path += '/' + params.subjects.join(',')
+			delete params.subjects
+		}
+		return get( path + objToRequest(params) )
 	}
 
 	const tables = function(params) {
