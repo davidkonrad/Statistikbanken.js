@@ -9,7 +9,7 @@ Se https://www.dst.dk/da/Statistik/brug-statistikken/muligheder-i-statistikbanke
 
 ### Fordele
 
-* Hurtigt at komme i gang - én enkelt fil
+* Kom hurtigt i gang - én enkelt fil
 * Uniform / ensartet tilgang til DST's API
 * Automatisk parsing af JSON og CSV
 * Fejlhåndtering 
@@ -110,7 +110,7 @@ Returnerer det øverste niveau. Som udgangspunkt i ```JSON```. Mulige parametre 
 <tbody>
 <tr>
 <td>subjects</td>
-<td>Liste af emner der skal findes under-emner for</td>
+<td>Liste af emner der skal findes underemner for</td>
 <td>[1,2,3]</td>
 <tr>
 <td>includeTables</td>
@@ -118,14 +118,20 @@ Returnerer det øverste niveau. Som udgangspunkt i ```JSON```. Mulige parametre 
 <td>true</td>
 <tr>
 <td>recursive</td>
-<td>Om under-emner skal fremsøges gennem hele hierarkiet</td>
+<td>Om underemner skal fremsøges gennem hele hierarkiet</td>
 <td>true</td>
 </tr>
 <tr>
 <td>omitInactiveSubjects</td>
-<td>Udelad emne-områder som ikke længere bliver opdateret</td>
+<td>Udelad emneområder som ikke længere bliver opdateret</td>
 <td>true</td>
 </tr>
+<tr>
+<td>omitSubjectsWithoutTables</td>
+<td>Udelad underemner som har nogen tabeller</td>
+<td>true</td>
+</tr>
+
 </tbody>
 </table>
 

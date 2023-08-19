@@ -86,8 +86,9 @@ div.result {
 <form id="form-subjects">
 	<label>
 		subjects
-		<input type="text" name="subjects" placeholder="1,2 ...">
+		<input type="text" name="subjects" placeholder="1,2...">
 	</label>
+		<br><br>
 	<label>
 		<input type="checkbox" name="includeTables">
 		includeTables
@@ -100,7 +101,13 @@ div.result {
 		<input type="checkbox" name="omitInactiveSubjects">
 		omitInactiveSubjects
 	</label>
-	<br><br><button type="button" id="btn-run-subjects">⚙️ Run</button><br><br>
+	<label>
+		<input type="checkbox" name="omitSubjectsWithoutTables">
+		omitSubjectsWithoutTables
+	</label>
+	<br><br>
+	<button type="button" id="btn-run-subjects">⚙️ Run</button>
+	<br><br>
 	<div class="result" id="result-subjects"></div>
 	<code id="result-subjects-length"></code>
 </form>
