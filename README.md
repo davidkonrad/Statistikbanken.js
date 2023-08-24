@@ -5,7 +5,7 @@ En lille javascript-funktion som indkapsler Statistikbankens API.
 Se https://www.dst.dk/da/Statistik/brug-statistikken/muligheder-i-statistikbanken/api.
 
 
-**Bemærk**: DST / Statistikbanken har intet at gøre med dette script. DST leverer desværre ingen eksempler eller dokumentation på praktisk brug af deres API, så i forhold til javascript var det lidt *try and error*. Scriptet er så at sige lavet, fordi det manglede 🙃 
+**Bemærk**: DST / Statistikbanken har intet at gøre med dette script. DST leverer desværre ikke rigtig kodeeksempler på praktisk brug af deres API, så i forhold til javascript var det lidt *try and error*. Scriptet er så at sige lavet, fordi det manglede 🙃 
 
 ### Fordele
 
@@ -59,6 +59,11 @@ SB har nogle generelle indstillinger som løbende kan ændres via ```init()``` :
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>method</td>
+<td>'POST'</td>
+<td>'GET' | 'POST'</td>
+<tr>
 <tr>
 <td>language</td>
 <td>'da'</td>
@@ -222,9 +227,8 @@ SB.data('FOLK1C', {
 ```
 Befolkningsudviklingen i *Hele landet*, *Tårnby*, *Viborg* og *Thisted*; delt op *I alt*, *Mænd* og *Kvinder*; set ift. de to kvartaler *2010k2* og seneste kvartal. Dette giver 12 "serier" der f.eks kan vises som kurvediagram. 
 
-DST insisterer på at levere ```data()``` i CSV-format, her kan man ikke vælge JSON eller XML. En fornuftig politik, eftersom denne type data dårligt kan komprimeres bedre end med CSV, og vi taler om op til 1.000.000 poster per transaktion. JSON / XML ville give et kæmpe overhead. 
-
-En respons fra Statistikbanken kan derfor (forskønnet) se sådan her ud :
+SB anmoder om at få ```data()``` leveret i CSV-format, det mest komprimerede af datasæt-formaterne. 
+En respons fra Statistikbanken kan (forskønnet) se sådan her ud :
 
 ```
 OMRÅDE;KØN;TID;INDHOLD
@@ -234,7 +238,7 @@ Hele landet;Mænd;2010K2;2745983
 Hele landet;Mænd;2023K3;2955326
 ...
 ```
-SB parser automatisk resultatet og returnerer et JSON array :
+SB parser automatisk resultatet og returnerer et JSON array, som er lidt nemmere at arbejde med i en browser :
 
 ```javascript
 [
@@ -244,7 +248,7 @@ SB parser automatisk resultatet og returnerer et JSON array :
  {OMRÅDE: 'Hele landet', KØN: 'Mænd', TID: '2023K3', INDHOLD: '2955326'},
 ...]
 ```
- .. Lidt nemmere at arbejde med. Som krølle på halen kan det demonstreres, hvordan ```language``` faktisk gør en forskel. DST har vitterlig internationaliseret deres data,- med ```{ language: 'en' }``` er resultatet for samme forespørgsel :
+ Som krølle på halen kan det demonstreres, hvordan ```language``` faktisk gør en forskel. DST har vitterlig internationaliseret deres data - med ```{ language: 'en' }``` er resultatet for samme forespørgsel :
 
 ```javascript
 [
