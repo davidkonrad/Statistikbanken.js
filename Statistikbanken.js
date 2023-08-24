@@ -32,6 +32,7 @@ const Statistikbanken = (function() { // eslint-disable-line no-unused-vars
 	let cache_bytes = 0
 	const cache_prefix = 'sb-cache-'
 
+	let fetch_method = 'POST'
 	let use_cache = false
 	let language = 'da'
 	let data_format = 'JSON'
@@ -39,6 +40,7 @@ const Statistikbanken = (function() { // eslint-disable-line no-unused-vars
 	const init = function(settings) {
 		if (settings && settings.cache) use_cache = settings.cache
 		if (settings && settings.language) language = settings.language
+		if (settings && settings.method) fetch_method = settings.method
 		if (settings && settings.format) data_format = settings.format
 	}
 
@@ -93,12 +95,28 @@ const Statistikbanken = (function() { // eslint-disable-line no-unused-vars
 
 	const XML = {
 		parse: function(xml) {
-			return new DOMParser().parseFromString(xml, "application/xml")
+			return new DOMParser().parseFromString(xml, 'application/xml')
+		}
+	}
+
+	const process = function(data) {
+		switch (data_format) {
+			case 'JSON':
+				return JSON.parse(data)
+				break	// eslint-disable-line no-unreachable
+			case 'CSV':
+				return CSV.parse(data)
+				break	// eslint-disable-line no-unreachable
+			case 'XML':
+				return XML.parse(data) 
+				break	// eslint-disable-line no-unreachable
+			default:
+				return data
+				break	// eslint-disable-line no-unreachable
 		}
 	}
 
 	const get = function(path) {
-
 		const append = function(name, value) {
 			path += path.indexOf('?') === -1 ? '?' : '&'
 			path += name + '=' + value
@@ -107,27 +125,11 @@ const Statistikbanken = (function() { // eslint-disable-line no-unused-vars
 		append('format', data_format)
 
 		return new Promise((resolve) => {
-			const process = function(data) {
-				switch (data_format) {
-					case 'JSON':
-						resolve( JSON.parse(data) )
-						break
-					case 'CSV':
-						resolve( CSV.parse(data) )
-						break
-					case 'XML':
-						resolve( XML.parse(data) )
-						break
-					default:
-						resolve( data )
-						break
-				}
-			}
 			if (use_cache && cache.test(path)) {
 				const data = cache.get(path)
 				cache_bytes += data.length
 				cache_hits += 1
-				process(data)
+				resolve(process(data))
 			} else {
 				fetch(path, { 
 					method: 'GET'
@@ -135,7 +137,42 @@ const Statistikbanken = (function() { // eslint-disable-line no-unused-vars
 					return res.text()
 				}).then(function(res) {
 					if (use_cache) cache.set(path, res)
-					process(res)
+					resolve(process(res))
+				})
+				.catch(function(error) {
+					console.log( Msg[language].ERR_FETCH )
+					console.error(error)
+					resolve([])
+				})
+			}
+		})
+	}
+
+	const post = function(path, params) {
+		params['lang'] = language
+		params['format'] = data_format
+		console.log(path, params)
+		return new Promise((resolve) => {
+			const body = JSON.stringify(params)
+			const cp = path + body.replace(/[^a-zA-Z0-9]/g, '')
+			if (use_cache && cache.test(cp)) {
+				const data = cache.get(cp)
+				cache_bytes += data.length
+				cache_hits += 1
+				resolve(process(data))
+			} else {
+				fetch(path, { 
+					headers: {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json'
+					},
+					method: 'POST',
+					body: body
+				}).then(function(res) {
+					return res.text()
+				}).then(function(res) {
+					if (use_cache) cache.set(cp, res)
+					resolve(process(res))
 				})
 				.catch(function(error) {
 					console.log( Msg[language].ERR_FETCH )
@@ -172,30 +209,54 @@ const Statistikbanken = (function() { // eslint-disable-line no-unused-vars
 	}					
 			
 	const subjects = function(params) {
-		let path = Path + 'subjects'
-		if (params && params.subjects) {
-			path += '/' + params.subjects.join(',')
-			delete params.subjects
+		if (fetch_method === 'GET') {
+			let path = Path + 'subjects'
+			if (params && params.subjects) {
+				path += '/' + params.subjects.join(',')
+				delete params.subjects
+			}
+			return get( path + objToRequest(params) )
+		} else {
+			return post( Path + 'subjects', params )
 		}
-		return get( path + objToRequest(params) )
 	}
 
 	const tables = function(params) {
-		return get( Path + 'tables' + objToRequest(params) )
+		if (fetch_method === 'GET') {
+			return get( Path + 'tables' + objToRequest(params) )
+		} else {
+			return post( Path + 'tables', params )
+		}
 	}
 
 	const tableInfo = function(table_id) {
-		return get( Path + 'tableinfo?id=' + table_id )
+		if (fetch_method === 'GET') {
+			return get( Path + 'tableinfo?id=' + table_id )
+		} else {
+			return post( Path + 'tableinfo', { table: table_id })
+		}
 	}
 
 	const data = function(table_id, params) {
 		return new Promise((resolve) => {
 			const old_format = data_format
-			data_format = 'CSV'
-			get( Path + 'data/' + table_id + '/' + objToRequest(params) ).then(function(result) {
-				data_format = old_format
-				resolve(result)
-			})
+			data_format = 'CSV' //!!
+			if (fetch_method === 'GET') {
+				get( Path + 'data/' + table_id + '/' + objToRequest(params) ).then(function(result) {
+					data_format = old_format
+					resolve(result)
+				})
+			} else {
+				let pp = { variables: [] }
+				for (const p in params) {
+					pp.variables.push({ code: p, values: params[p] })
+				}
+				pp.table = table_id
+				post( Path + 'data', pp).then(function(result) {
+					data_format = old_format
+					resolve(result)
+				})
+			}
 		})
 	}
 

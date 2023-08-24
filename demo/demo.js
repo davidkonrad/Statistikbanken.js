@@ -1,5 +1,5 @@
 /*
-	Demo / test for Statistikbanken.js
+	Playground for Statistikbanken.js
 	(c) David Konrad, 2023- present
 */
 
@@ -61,6 +61,11 @@ const Demo = (function(window, document, Statistikbanken) {
 			radio.onclick = function() {
 				data_format = this.value
 				Statistikbanken.init({ format: this.value })
+			}
+		})
+		qall('input[name="radio-fetch-method"]').forEach(function(radio) {
+			radio.onclick = function() {
+				Statistikbanken.init({ method: this.value })
 			}
 		})
 	}
